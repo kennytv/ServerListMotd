@@ -4,6 +4,7 @@ import eu.kennytv.serverlistmotd.api.ISettings;
 
 public abstract class Settings implements ISettings {
     private boolean changePlayerCount;
+    private boolean showPlayerCount;
     private String motd;
     private String playerCountMessage;
     private String playerCountHoverMessage;
@@ -11,6 +12,7 @@ public abstract class Settings implements ISettings {
 
     protected void loadSettings() {
         changePlayerCount = getConfigBoolean("custom-playercountmessage");
+        showPlayerCount = getConfigBoolean("show-playercount");
         motd = getConfigString("motd");
         noPermMessage = getConfigString("no-permission-message");
         playerCountMessage = getConfigString("playercountmessage");
@@ -35,6 +37,11 @@ public abstract class Settings implements ISettings {
     @Override
     public boolean hasCustomPlayerCount() {
         return changePlayerCount;
+    }
+
+    @Override
+    public boolean showPlayerCount() {
+        return showPlayerCount;
     }
 
     public abstract void saveConfig();

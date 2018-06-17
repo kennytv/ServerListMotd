@@ -17,4 +17,6 @@ public interface ISettings {
     boolean reloadServerIcon();
 
     boolean hasCustomPlayerCount();
+
+    boolean showPlayerCount();
 }

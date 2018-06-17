@@ -6,9 +6,10 @@ motd: "&aWelcome!%NEWLINE%&6Just saying hello! :D"
 
 # Is shown at the top right corner of the server in the serverlist,
 # where the playercount would normally be displayed.
-# WARNING: If enabled, the playercount won't be displayed anymore, it will be completely replaced by the message below.
 custom-playercountmessage: false
 playercountmessage: "&4Hoia!"
+# If set to false, only the given text will be shown without the playercount (requires custom-playercountmessage set to true).
+show-playercount: true
 
 # Is shown when you move your mouse above the text at the top right corner of the server in the serverlist,
 # where the playercount would normally be displayed.

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public final class ProxyPingListener implements Listener, IPingListener {
+    private final String players = " §7%d§8/§7%d";
     private final Settings settings;
     private Favicon favicon;
 
@@ -24,13 +25,16 @@ public final class ProxyPingListener implements Listener, IPingListener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void proxyPing(final ProxyPingEvent event) {
         final ServerPing ping = event.getResponse();
-        if (settings.hasCustomPlayerCount())
-            ping.setVersion(new ServerPing.Protocol(settings.getPlayerCountMessage(), 1));
-        ping.setDescription(settings.getMotd().replace("%NEWLINE%", "\n"));
-        ping.setPlayers(new ServerPing.Players(0, 0, new ServerPing.PlayerInfo[]{
-                new ServerPing.PlayerInfo(settings.getPlayerCountHoverMessage().replace("%NEWLINE%", "\n"), "")
-        }));
+        if (settings.hasCustomPlayerCount()) {
+            ping.getVersion().setProtocol(1);
+            ping.getVersion().setName(settings.showPlayerCount() ? settings.getPlayerCountMessage()
+                    + String.format(players, ping.getPlayers().getOnline(), ping.getPlayers().getMax()) : settings.getPlayerCountMessage());
+        }
 
+        ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
+                new ServerPing.PlayerInfo(settings.getPlayerCountHoverMessage().replace("%NEWLINE%", "\n"), "")
+        });
+        ping.setDescription(settings.getMotd().replace("%NEWLINE%", "\n"));
         if (favicon != null)
             ping.setFavicon(favicon);
     }

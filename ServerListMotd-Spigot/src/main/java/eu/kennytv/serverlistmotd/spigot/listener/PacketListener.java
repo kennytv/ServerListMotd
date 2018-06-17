@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class PacketListener implements IPingListener {
+    private final String players = " §7%d§8/§7%d";
     private WrappedServerPing.CompressedImage image;
 
     public PacketListener(final ServerListMotdSpigotBase base, final Settings settings) {
@@ -27,7 +28,8 @@ public final class PacketListener implements IPingListener {
             public void onPacketSending(final PacketEvent event) {
                 final WrappedServerPing ping = event.getPacket().getServerPings().read(0);
                 if (settings.hasCustomPlayerCount()) {
-                    ping.setVersionName(settings.getPlayerCountMessage());
+                    ping.setVersionName(settings.showPlayerCount() ? settings.getPlayerCountMessage()
+                            + String.format(players, ping.getPlayersOnline(), ping.getPlayersMaximum()) : settings.getPlayerCountMessage());
                     ping.setVersionProtocol(0);
                 }
 
