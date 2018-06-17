@@ -1,0 +1,17 @@
+# ServerListMotd Plugin by KennyTV
+# Version ${project.version}
+
+# The message shown in the multiplayer server list motd.
+motd: "&aWelcome!%NEWLINE%&6Just saying hello! :D"
+
+# Is shown at the top right corner of the server in the serverlist,
+# where the playercount would normally be displayed.
+# WARNING: If enabled, the playercount won't be displayed anymore, it will be completely replaced by the message below.
+custom-playercountmessage: false
+playercountmessage: "&4Hoia!"
+
+# Is shown when you move your mouse above the text at the top right corner of the server in the serverlist,
+# where the playercount would normally be displayed.
+playercounthovermessage: "&cJoin%NEWLINE%&cplz"
+
+no-permission-message: "&cYou do not have the permission to execute that command."
