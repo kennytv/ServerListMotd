@@ -22,7 +22,7 @@ public final class PacketListener implements IPingListener {
     private WrappedServerPing.CompressedImage image;
 
     public PacketListener(final ServerListMotdSpigotBase base, final Settings settings) {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(base, ListenerPriority.HIGHEST,
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(base, ListenerPriority.HIGH,
                 PacketType.Status.Server.OUT_SERVER_INFO) {
             @Override
             public void onPacketSending(final PacketEvent event) {

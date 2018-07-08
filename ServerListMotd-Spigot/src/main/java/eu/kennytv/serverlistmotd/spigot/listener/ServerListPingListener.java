@@ -20,7 +20,7 @@ public final class ServerListPingListener implements Listener, IPingListener {
         this.settings = settings;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void serverListPing(final ServerListPingEvent event) {
         event.setMotd(settings.getMotd().replace("%NEWLINE%", "\n"));
 

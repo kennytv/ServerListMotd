@@ -22,7 +22,7 @@ public final class ProxyPingListener implements Listener, IPingListener {
         this.settings = settings;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void proxyPing(final ProxyPingEvent event) {
         final ServerPing ping = event.getResponse();
         if (settings.hasCustomPlayerCount()) {
