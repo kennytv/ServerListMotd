@@ -1,5 +1,6 @@
 package eu.kennytv.serverlistmotd.bungee;
 
+import com.google.common.collect.Lists;
 import eu.kennytv.serverlistmotd.bungee.listener.ProxyPingListener;
 import eu.kennytv.serverlistmotd.core.Settings;
 import eu.kennytv.serverlistmotd.core.listener.IPingListener;
@@ -10,6 +11,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.List;
 
 public final class SettingsBungee extends Settings {
     private final ServerListMotdBungeeBase plugin;
@@ -52,6 +54,14 @@ public final class SettingsBungee extends Settings {
     }
 
     @Override
+    public void updateConfig() {
+        if (!config.contains("motd")) return;
+        config.set("motds", Lists.newArrayList(getConfigString("motd")));
+        config.set("motd", null);
+        saveConfig();
+    }
+
+    @Override
     public void saveConfig() {
         final File file = new File(plugin.getDataFolder(), "config.yml");
         try {
@@ -79,6 +89,11 @@ public final class SettingsBungee extends Settings {
     @Override
     public boolean getConfigBoolean(final String path) {
         return config.getBoolean(path);
+    }
+
+    @Override
+    public List<String> getConfigList(final String path) {
+        return config.getStringList(path);
     }
 
     @Override

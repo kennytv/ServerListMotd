@@ -1,5 +1,6 @@
 package eu.kennytv.serverlistmotd.spigot;
 
+import com.google.common.collect.Lists;
 import eu.kennytv.serverlistmotd.core.Settings;
 import eu.kennytv.serverlistmotd.core.listener.IPingListener;
 import eu.kennytv.serverlistmotd.spigot.listener.PacketListener;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.PluginManager;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.List;
 
 public final class SettingsSpigot extends Settings {
     private final ServerListMotdSpigotBase plugin;
@@ -41,6 +43,14 @@ public final class SettingsSpigot extends Settings {
         }
 
         reloadConfig();
+    }
+
+    @Override
+    public void updateConfig() {
+        if (!config.contains("motd")) return;
+        config.set("motds", Lists.newArrayList(getConfigString("motd")));
+        config.set("motd", null);
+        saveConfig();
     }
 
     @Override
@@ -77,6 +87,11 @@ public final class SettingsSpigot extends Settings {
     @Override
     public boolean getConfigBoolean(final String path) {
         return config.getBoolean(path);
+    }
+
+    @Override
+    public List<String> getConfigList(final String path) {
+        return config.getStringList(path);
     }
 
     @Override

@@ -4,8 +4,6 @@ import eu.kennytv.serverlistmotd.core.ServerListMotdPlugin;
 import eu.kennytv.serverlistmotd.core.Settings;
 import eu.kennytv.serverlistmotd.core.util.SenderInfo;
 
-import java.util.Arrays;
-
 public abstract class ServerListMotdCommand {
     protected final ServerListMotdPlugin plugin;
     protected final Settings settings;
@@ -43,7 +41,7 @@ public abstract class ServerListMotdCommand {
                     sender.sendMessage(plugin.getPrefix() + "§4Failed!");
             } else
                 sendUsage(sender);
-        } else if (args.length == 3) {
+        /*} else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("setmotd")) {
                 if (checkPermission(sender, "setmotd")) return;
                 if (!isNumeric(args[1])) {
@@ -72,7 +70,7 @@ public abstract class ServerListMotdCommand {
                 settings.reloadConfig();
                 sender.sendMessage(plugin.getPrefix() + "§aSet line " + line + " of the motd motd to §f" + getColoredString(message));
             } else
-                sendUsage(sender);
+                sendUsage(sender);*/
         } else
             sendUsage(sender);
     }
