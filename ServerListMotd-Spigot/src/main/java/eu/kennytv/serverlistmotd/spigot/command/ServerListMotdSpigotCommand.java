@@ -5,7 +5,6 @@ import eu.kennytv.serverlistmotd.core.command.ServerListMotdCommand;
 import eu.kennytv.serverlistmotd.core.util.SenderInfo;
 import eu.kennytv.serverlistmotd.spigot.ServerListMotdSpigotPlugin;
 import eu.kennytv.serverlistmotd.spigot.util.BukkitSenderInfo;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,10 +30,5 @@ public final class ServerListMotdSpigotCommand extends ServerListMotdCommand imp
             sender.sendMessage(plugin.getPrefix() + "§eUse §c§l/serverlistmotdspigot forceupdate §eto update!");
         } else
             sender.sendMessage(plugin.getPrefix() + "§aYou already have the latest version of the plugin!");
-    }
-
-    @Override
-    protected String getColoredString(final String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

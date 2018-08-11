@@ -3,7 +3,7 @@ version: ${project.version}
 main: eu.kennytv.serverlistmotd.spigot.ServerListMotdSpigotBase
 author: KennyTV
 softdepend: [ProtocolLib]
-website: https://www.spigotmc.org/resources/...
+website: https://www.spigotmc.org/resources/57851
 
 commands:
   serverlistmotdspigot:

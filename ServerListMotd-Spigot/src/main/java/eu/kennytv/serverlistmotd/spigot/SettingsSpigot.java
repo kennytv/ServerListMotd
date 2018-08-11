@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -48,9 +49,14 @@ public final class SettingsSpigot extends Settings {
     @Override
     public void updateConfig() {
         if (!config.contains("motd")) return;
-        config.set("motds", Lists.newArrayList(getConfigString("motd")));
+        config.set("motds", Lists.newArrayList(config.getString("motd")));
         config.set("motd", null);
         saveConfig();
+    }
+
+    @Override
+    public String getColoredString(final String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override
@@ -66,7 +72,7 @@ public final class SettingsSpigot extends Settings {
     public void reloadConfig() {
         final File file = new File(plugin.getDataFolder(), "config.yml");
         try {
-            config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), "UTF8"));
+            config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (final IOException e) {
             throw new RuntimeException("Unable to load config.yml!", e);
         }
@@ -76,12 +82,12 @@ public final class SettingsSpigot extends Settings {
 
     @Override
     public String getConfigString(final String path) {
-        return ChatColor.translateAlternateColorCodes('&', config.getString(path));
-    }
-
-    @Override
-    public String getRawConfigString(final String path) {
-        return config.getString(path);
+        final String s = config.getString(path);
+        if (s == null) {
+            plugin.getLogger().warning("The config is missing the following string: " + path);
+            return "null";
+        }
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     @Override

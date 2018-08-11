@@ -9,7 +9,7 @@ public abstract class Settings implements ISettings {
     private static final Random RANDOM = new Random();
     private boolean changePlayerCount;
     private boolean showPlayerCount;
-    private List<String> motd;
+    private List<String> motds;
     private String playerCountMessage;
     private String playerCountHoverMessage;
     private String noPermMessage;
@@ -18,18 +18,23 @@ public abstract class Settings implements ISettings {
         updateConfig();
         changePlayerCount = getConfigBoolean("custom-playercountmessage");
         showPlayerCount = getConfigBoolean("show-playercount");
-        motd = getConfigList("motds");
+        motds = getConfigList("motds");
         noPermMessage = getConfigString("no-permission-message");
         playerCountMessage = getConfigString("playercountmessage");
         playerCountHoverMessage = getConfigString("playercounthovermessage");
     }
 
-    @Deprecated
     public abstract void updateConfig();
+
+    public List<String> getMotds() {
+        return motds;
+    }
 
     @Override
     public String getMotd() {
-        return motd.size() > 1 ? motd.get(RANDOM.nextInt(motd.size())) : motd.get(0);
+        if (motds.isEmpty()) return "";
+        final String s = motds.size() > 1 ? motds.get(RANDOM.nextInt(motds.size())) : motds.get(0);
+        return getColoredString(s.replace("%NEWLINE%", "\n"));
     }
 
     @Override
@@ -52,13 +57,13 @@ public abstract class Settings implements ISettings {
         return showPlayerCount;
     }
 
+    public abstract String getColoredString(String message);
+
     public abstract void saveConfig();
 
     public abstract void setToConfig(String path, Object var);
 
     public abstract String getConfigString(String path);
-
-    public abstract String getRawConfigString(String path);
 
     public abstract boolean getConfigBoolean(String path);
 

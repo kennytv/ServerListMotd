@@ -10,6 +10,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public final class SettingsBungee extends Settings {
     public void reloadConfig() {
         final File file = new File(plugin.getDataFolder(), "config.yml");
         try {
-            config = YamlConfiguration.getProvider(YamlConfiguration.class).load(new InputStreamReader(new FileInputStream(file), "UTF8"));
+            config = YamlConfiguration.getProvider(YamlConfiguration.class).load(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (final IOException e) {
             throw new RuntimeException("Unable to load config.yml!", e);
         }
@@ -56,16 +57,21 @@ public final class SettingsBungee extends Settings {
     @Override
     public void updateConfig() {
         if (!config.contains("motd")) return;
-        config.set("motds", Lists.newArrayList(getConfigString("motd")));
+        config.set("motds", Lists.newArrayList(config.getString("motd")));
         config.set("motd", null);
         saveConfig();
+    }
+
+    @Override
+    public String getColoredString(final String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     @Override
     public void saveConfig() {
         final File file = new File(plugin.getDataFolder(), "config.yml");
         try {
-            YamlConfiguration.getProvider(YamlConfiguration.class).save(config, new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+            YamlConfiguration.getProvider(YamlConfiguration.class).save(config, new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
         } catch (final IOException e) {
             throw new RuntimeException("Unable to save config.yml!", e);
         }
@@ -78,12 +84,12 @@ public final class SettingsBungee extends Settings {
 
     @Override
     public String getConfigString(final String path) {
-        return ChatColor.translateAlternateColorCodes('&', config.getString(path));
-    }
-
-    @Override
-    public String getRawConfigString(final String path) {
-        return config.getString(path);
+        final String s = config.getString(path);
+        if (s == null) {
+            plugin.getLogger().warning("The config is missing the following string: " + path);
+            return "null";
+        }
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     @Override
