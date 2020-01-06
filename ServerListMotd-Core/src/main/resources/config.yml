@@ -18,4 +18,7 @@ show-playercount: true
 # where the playercount would normally be displayed.
 playercounthovermessage: "&cJoin%NEWLINE%&cplz"
 
+# If you don't want to be up to date, you can!
+update-checks: true
+
 no-permission-message: "&cYou do not have the permission to execute that command."

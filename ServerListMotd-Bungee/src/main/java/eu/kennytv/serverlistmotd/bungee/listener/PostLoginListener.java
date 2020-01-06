@@ -10,8 +10,11 @@ import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
+import java.util.UUID;
+
 public final class PostLoginListener implements Listener {
     private final ServerListMotdBungeePlugin plugin;
+    private final UUID notifyUuid = new UUID(-6334418481592579467L, -4779835342378829761L);
 
     public PostLoginListener(final ServerListMotdBungeePlugin plugin) {
         this.plugin = plugin;
@@ -20,10 +23,12 @@ public final class PostLoginListener implements Listener {
     @EventHandler
     public void postLogin(final PostLoginEvent event) {
         final ProxiedPlayer p = event.getPlayer();
-        if (p.getUniqueId().toString().equals("a8179ff3-c201-4a75-bdaa-9d14aca6f83f"))
-            p.sendMessage("§6ServerListMotdBungee §aVersion " + plugin.getVersion());
+        // Just a harmless message to maybe give me a little smile :)
+        if (p.getUniqueId().equals(notifyUuid)) {
+            p.sendMessage("§6ServerListMotdSpigot §aVersion " + plugin.getVersion());
+        }
 
-        if (!p.hasPermission("serverlistmotd.admin")) return;
+        if (!plugin.getSettings().updateChecksEnabled() || !p.hasPermission("serverlistmotd.admin")) return;
 
         plugin.async(() -> {
             if (plugin.updateAvailable()) {

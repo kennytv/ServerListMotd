@@ -1,4 +1,4 @@
-This repo is mainly for reporting bugs in the issues section. You might have a look at the general code, but you can't actually compile it (that easily) without other dependencies. You may not copy the code or distribute it as your own.
+More or less just a bunch of old code, not much to look at here 👀
 
 # ServerListMotd-Issues
 

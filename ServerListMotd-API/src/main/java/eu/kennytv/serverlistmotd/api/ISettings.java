@@ -19,4 +19,6 @@ public interface ISettings {
     boolean hasCustomPlayerCount();
 
     boolean showPlayerCount();
+
+    boolean updateChecksEnabled();
 }

@@ -9,6 +9,7 @@ public abstract class Settings implements ISettings {
     private static final Random RANDOM = new Random();
     private boolean changePlayerCount;
     private boolean showPlayerCount;
+    private boolean updateChecks;
     private List<String> motds;
     private String playerCountMessage;
     private String playerCountHoverMessage;
@@ -22,6 +23,7 @@ public abstract class Settings implements ISettings {
         noPermMessage = getConfigString("no-permission-message");
         playerCountMessage = getConfigString("playercountmessage");
         playerCountHoverMessage = getConfigString("playercounthovermessage");
+        updateChecks = getConfigBoolean("update-checks", true);
     }
 
     public abstract void updateConfig();
@@ -34,7 +36,7 @@ public abstract class Settings implements ISettings {
     public String getMotd() {
         if (motds.isEmpty()) return "";
         final String s = motds.size() > 1 ? motds.get(RANDOM.nextInt(motds.size())) : motds.get(0);
-        return getColoredString(s.replace("%NEWLINE%", "\n"));
+        return getColoredString(s).replace("%NEWLINE%", "\n");
     }
 
     @Override
@@ -57,6 +59,11 @@ public abstract class Settings implements ISettings {
         return showPlayerCount;
     }
 
+    @Override
+    public boolean updateChecksEnabled() {
+        return updateChecks;
+    }
+
     public abstract String getColoredString(String message);
 
     public abstract void saveConfig();
@@ -65,7 +72,11 @@ public abstract class Settings implements ISettings {
 
     public abstract String getConfigString(String path);
 
-    public abstract boolean getConfigBoolean(String path);
+    public abstract boolean getConfigBoolean(String path, boolean def);
+
+    public boolean getConfigBoolean(final String path) {
+        return getConfigBoolean(path, false);
+    }
 
     public abstract List<String> getConfigList(String path);
 

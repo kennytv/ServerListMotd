@@ -7,23 +7,31 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import java.util.UUID;
+
 public final class PlayerLoginListener implements Listener {
     private final ServerListMotdSpigotPlugin plugin;
+    private final UUID notifyUuid = new UUID(-6334418481592579467L, -4779835342378829761L);
 
     public PlayerLoginListener(final ServerListMotdSpigotPlugin plugin) {
         this.plugin = plugin;
     }
 
-    @EventHandler
-    public void postLogin(final PlayerLoginEvent event) {
-        final Player p = event.getPlayer();
-        if (p.getUniqueId().toString().equals("a8179ff3-c201-4a75-bdaa-9d14aca6f83f"))
-            p.sendMessage("§6ServerListMotdSpigot §aVersion " + plugin.getVersion());
+    @EventHandler(priority = EventPriority.HIGH)
+    public void playerLogin(final PlayerLoginEvent event) {
+        if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) return;
 
-        if (!p.hasPermission("serverlistmotd.admin")) return;
+        final Player p = event.getPlayer();
+        // Just a harmless message to maybe give me a little smile :)
+        if (p.getUniqueId().equals(notifyUuid)) {
+            p.sendMessage("§6ServerListMotdSpigot §aVersion " + plugin.getVersion());
+        }
+
+        if (!plugin.getSettings().updateChecksEnabled() || !p.hasPermission("serverlistmotd.admin")) return;
 
         plugin.async(() -> {
             try {

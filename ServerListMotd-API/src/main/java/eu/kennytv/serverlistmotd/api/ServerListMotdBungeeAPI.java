@@ -21,9 +21,10 @@ public final class ServerListMotdBungeeAPI {
      */
     public static IServerListMotd getAPI() {
         final Plugin serverListMotd = ProxyServer.getInstance().getPluginManager().getPlugin("ServerListMotdBungee");
-        if (serverListMotd == null)
+        if (serverListMotd == null) {
             ProxyServer.getInstance().getLogger().warning("Could not get instance of ServerListMotdBungee!");
-
+            return null;
+        }
         return ((IServerListMotdBase) serverListMotd).getApi();
     }
 }

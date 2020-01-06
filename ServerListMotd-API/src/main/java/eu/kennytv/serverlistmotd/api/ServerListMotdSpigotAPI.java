@@ -21,9 +21,10 @@ public final class ServerListMotdSpigotAPI {
      */
     public static IServerListMotd getAPI() {
         final Plugin serverListMotd = Bukkit.getPluginManager().getPlugin("ServerListMotdSpigot");
-        if (serverListMotd == null)
+        if (serverListMotd == null) {
             Bukkit.getLogger().warning("Could not get instance of ServerListMotdSpigot!");
-
+            return null;
+        }
         return ((IServerListMotdBase) serverListMotd).getApi();
     }
 }

@@ -40,6 +40,7 @@ public final class SettingsBungee extends Settings {
         }
 
         reloadConfig();
+        reloadServerIcon();
     }
 
     @Override
@@ -93,8 +94,8 @@ public final class SettingsBungee extends Settings {
     }
 
     @Override
-    public boolean getConfigBoolean(final String path) {
-        return config.getBoolean(path);
+    public boolean getConfigBoolean(final String path, final boolean def) {
+        return config.getBoolean(path, def);
     }
 
     @Override

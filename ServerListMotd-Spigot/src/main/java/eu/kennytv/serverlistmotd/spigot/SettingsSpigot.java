@@ -16,27 +16,28 @@ import java.nio.file.Files;
 import java.util.List;
 
 public final class SettingsSpigot extends Settings {
-    private final ServerListMotdSpigotBase plugin;
+    private final ServerListMotdSpigotBase base;
     private final IPingListener pingListener;
     private FileConfiguration config;
 
-    SettingsSpigot(final ServerListMotdSpigotBase plugin) {
-        this.plugin = plugin;
+    SettingsSpigot(final ServerListMotdSpigotPlugin plugin, final ServerListMotdSpigotBase base) {
+        this.base = base;
 
-        final PluginManager pm = plugin.getServer().getPluginManager();
+        final PluginManager pm = base.getServer().getPluginManager();
         if (pm.getPlugin("ProtocolLib") == null) {
-            final ServerListPingListener listener = new ServerListPingListener(this);
-            pm.registerEvents(listener, plugin);
+            final ServerListPingListener listener = new ServerListPingListener(plugin, this);
+            pm.registerEvents(listener, base);
             pingListener = listener;
-        } else
+        } else {
             pingListener = new PacketListener(plugin, this);
+        }
 
-        if (!plugin.getDataFolder().exists())
-            plugin.getDataFolder().mkdirs();
+        if (!base.getDataFolder().exists())
+            base.getDataFolder().mkdirs();
 
-        final File file = new File(plugin.getDataFolder(), "config.yml");
+        final File file = new File(base.getDataFolder(), "config.yml");
         if (!file.exists()) {
-            try (final InputStream in = plugin.getResource("config.yml")) {
+            try (final InputStream in = base.getResource("config.yml")) {
                 Files.copy(in, file.toPath());
             } catch (final IOException e) {
                 throw new RuntimeException("Unable to create config.yml!", e);
@@ -44,6 +45,7 @@ public final class SettingsSpigot extends Settings {
         }
 
         reloadConfig();
+        reloadServerIcon();
     }
 
     @Override
@@ -62,7 +64,7 @@ public final class SettingsSpigot extends Settings {
     @Override
     public void saveConfig() {
         try {
-            config.save(new File(plugin.getDataFolder(), "config.yml"));
+            config.save(new File(base.getDataFolder(), "config.yml"));
         } catch (final IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +72,7 @@ public final class SettingsSpigot extends Settings {
 
     @Override
     public void reloadConfig() {
-        final File file = new File(plugin.getDataFolder(), "config.yml");
+        final File file = new File(base.getDataFolder(), "config.yml");
         try {
             config = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (final IOException e) {
@@ -84,15 +86,15 @@ public final class SettingsSpigot extends Settings {
     public String getConfigString(final String path) {
         final String s = config.getString(path);
         if (s == null) {
-            plugin.getLogger().warning("The config is missing the following string: " + path);
+            base.getLogger().warning("The config is missing the following string: " + path);
             return "null";
         }
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     @Override
-    public boolean getConfigBoolean(final String path) {
-        return config.getBoolean(path);
+    public boolean getConfigBoolean(final String path, final boolean def) {
+        return config.getBoolean(path, def);
     }
 
     @Override

@@ -23,6 +23,7 @@ public abstract class ServerListMotdCommand {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (checkPermission(sender, "reload")) return;
                 settings.reloadConfig();
+                settings.reloadServerIcon();
                 sender.sendMessage(plugin.getPrefix() + "§aReloaded config and the motd icon");
             } else if (args[0].equalsIgnoreCase("update")) {
                 if (checkPermission(sender, "update")) return;
