@@ -7,7 +7,7 @@
     <groupId>eu.kennytv</groupId>
     <artifactId>serverlistmotd-base</artifactId>
     <name>ServerListMotd</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -22,6 +22,10 @@
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
             <id>dmulloy2-repo</id>
@@ -46,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

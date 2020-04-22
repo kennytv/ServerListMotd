@@ -4,13 +4,18 @@ import com.google.common.collect.Lists;
 import eu.kennytv.serverlistmotd.core.Settings;
 import eu.kennytv.serverlistmotd.core.listener.IPingListener;
 import eu.kennytv.serverlistmotd.spigot.listener.PacketListener;
+import eu.kennytv.serverlistmotd.spigot.listener.PaperServerListPingListener;
 import eu.kennytv.serverlistmotd.spigot.listener.ServerListPingListener;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
@@ -24,12 +29,16 @@ public final class SettingsSpigot extends Settings {
         this.base = base;
 
         final PluginManager pm = base.getServer().getPluginManager();
-        if (pm.getPlugin("ProtocolLib") == null) {
+        if (isPaper()) {
+            final PaperServerListPingListener listener = new PaperServerListPingListener(plugin, this);
+            pm.registerEvents(listener, base);
+            pingListener = listener;
+        } else if (pm.getPlugin("ProtocolLib") != null) {
+            pingListener = new PacketListener(plugin, this);
+        } else {
             final ServerListPingListener listener = new ServerListPingListener(plugin, this);
             pm.registerEvents(listener, base);
             pingListener = listener;
-        } else {
-            pingListener = new PacketListener(plugin, this);
         }
 
         if (!base.getDataFolder().exists())
@@ -46,6 +55,15 @@ public final class SettingsSpigot extends Settings {
 
         reloadConfig();
         reloadServerIcon();
+    }
+
+    private boolean isPaper() {
+        try {
+            Class.forName("com.destroystokyo.paper.event.server.PaperServerListPingEvent");
+            return true;
+        } catch (final ClassNotFoundException e) {
+            return false;
+        }
     }
 
     @Override
