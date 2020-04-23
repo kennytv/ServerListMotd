@@ -40,7 +40,7 @@ public final class PaperServerListPingListener implements Listener, IPingListene
         final List<PlayerProfile> sample = event.getPlayerSample();
         sample.clear();
         for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
-            sample.add(plugin.getServer().createProfile(string));
+            sample.add(plugin.getServer().createProfile(plugin.replacePlaceholders(string)));
         }
 
         if (serverIcon != null) {
