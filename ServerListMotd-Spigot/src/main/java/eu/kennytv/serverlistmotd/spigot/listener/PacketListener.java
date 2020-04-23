@@ -42,11 +42,13 @@ public final class PacketListener extends PacketAdapter implements IPingListener
 
         ping.setMotD(plugin.replacePlaceholders(settings.getMotd()));
 
-        final List<WrappedGameProfile> players = new ArrayList<>();
-        for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
-            players.add(new WrappedGameProfile(UUID.randomUUID(), plugin.replacePlaceholders(string)));
+        if (settings.hasCustomPlayerCountHoverMessage()) {
+            final List<WrappedGameProfile> players = new ArrayList<>();
+            for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
+                players.add(new WrappedGameProfile(UUID.randomUUID(), plugin.replacePlaceholders(string)));
+            }
+            ping.setPlayers(players);
         }
-        ping.setPlayers(players);
 
         if (image != null) {
             ping.setFavicon(image);

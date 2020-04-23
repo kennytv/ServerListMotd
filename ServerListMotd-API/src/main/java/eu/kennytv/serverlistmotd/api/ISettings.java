@@ -18,6 +18,8 @@ public interface ISettings {
 
     boolean hasCustomPlayerCount();
 
+    boolean hasCustomPlayerCountHoverMessage();
+
     boolean showPlayerCount();
 
     boolean updateChecksEnabled();

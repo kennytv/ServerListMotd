@@ -16,6 +16,7 @@ show-playercount: true
 
 # Is shown when you move your mouse above the text at the top right corner of the server in the serverlist,
 # where the playercount would normally be displayed.
+custom-playercounthovermessage: true
 playercounthovermessage: "&cJoin%NEWLINE%&cplz"
 
 # If you don't want to be up to date, you can!

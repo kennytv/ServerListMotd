@@ -31,10 +31,11 @@ public final class ProxyPingListener implements Listener, IPingListener {
             ping.getVersion().setName(settings.showPlayerCount() ? settings.getPlayerCountMessage()
                     + String.format(PLAYERS_FORMAT, ping.getPlayers().getOnline(), ping.getPlayers().getMax()) : settings.getPlayerCountMessage());
         }
-
-        ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
-                new ServerPing.PlayerInfo(settings.getPlayerCountHoverMessage().replace("%NEWLINE%", "\n"), "")
-        });
+        if (settings.hasCustomPlayerCountHoverMessage()) {
+            ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
+                    new ServerPing.PlayerInfo(settings.getPlayerCountHoverMessage().replace("%NEWLINE%", "\n"), "")
+            });
+        }
         ping.setDescriptionComponent(new TextComponent(TextComponent.fromLegacyText(settings.getMotd())));
         if (favicon != null) {
             ping.setFavicon(favicon);

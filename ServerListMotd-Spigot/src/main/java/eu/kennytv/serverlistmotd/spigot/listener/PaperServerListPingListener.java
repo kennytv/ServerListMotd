@@ -37,10 +37,12 @@ public final class PaperServerListPingListener implements Listener, IPingListene
             event.setVersion(versionName);
         }
 
-        final List<PlayerProfile> sample = event.getPlayerSample();
-        sample.clear();
-        for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
-            sample.add(plugin.getServer().createProfile(plugin.replacePlaceholders(string)));
+        if (settings.hasCustomPlayerCountHoverMessage()) {
+            final List<PlayerProfile> sample = event.getPlayerSample();
+            sample.clear();
+            for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
+                sample.add(plugin.getServer().createProfile(plugin.replacePlaceholders(string)));
+            }
         }
 
         if (serverIcon != null) {

@@ -8,6 +8,7 @@ import java.util.Random;
 public abstract class Settings implements ISettings {
     private static final Random RANDOM = new Random();
     private boolean changePlayerCount;
+    private boolean changePlayerCountHoverMessage;
     private boolean showPlayerCount;
     private boolean updateChecks;
     private List<String> motds;
@@ -18,6 +19,7 @@ public abstract class Settings implements ISettings {
     protected void loadSettings() {
         updateConfig();
         changePlayerCount = getConfigBoolean("custom-playercountmessage");
+        changePlayerCountHoverMessage = getConfigBoolean("custom-playercounthovermessage", true);
         showPlayerCount = getConfigBoolean("show-playercount");
         motds = getConfigList("motds");
         noPermMessage = getConfigString("no-permission-message");
@@ -52,6 +54,11 @@ public abstract class Settings implements ISettings {
     @Override
     public boolean hasCustomPlayerCount() {
         return changePlayerCount;
+    }
+
+    @Override
+    public boolean hasCustomPlayerCountHoverMessage() {
+        return changePlayerCountHoverMessage;
     }
 
     @Override
