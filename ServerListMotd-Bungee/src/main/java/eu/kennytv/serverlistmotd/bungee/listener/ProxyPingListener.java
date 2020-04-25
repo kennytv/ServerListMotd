@@ -45,7 +45,7 @@ public final class ProxyPingListener implements Listener, IPingListener {
     @Override
     public boolean loadIcon() {
         try {
-            final File file = new File("server-icon.png");
+            final File file = new File(settings.getServerIconPath());
             if (!file.exists()) return false;
             favicon = Favicon.create(ImageIO.read(file));
         } catch (final IOException | IllegalArgumentException e) {

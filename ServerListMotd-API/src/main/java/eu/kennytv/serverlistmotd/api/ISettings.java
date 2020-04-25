@@ -22,5 +22,7 @@ public interface ISettings {
 
     boolean showPlayerCount();
 
+    String getServerIconPath();
+
     boolean updateChecksEnabled();
 }

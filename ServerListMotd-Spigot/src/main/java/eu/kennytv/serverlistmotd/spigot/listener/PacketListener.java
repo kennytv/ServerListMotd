@@ -58,7 +58,7 @@ public final class PacketListener extends PacketAdapter implements IPingListener
     @Override
     public boolean loadIcon() {
         try {
-            final File file = new File("server-icon.png");
+            final File file = new File(settings.getServerIconPath());
             if (!file.exists()) return false;
             image = WrappedServerPing.CompressedImage.fromPng(ImageIO.read(file));
         } catch (final Exception e) {

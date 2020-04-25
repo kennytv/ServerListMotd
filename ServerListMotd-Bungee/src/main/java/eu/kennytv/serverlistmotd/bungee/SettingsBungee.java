@@ -9,7 +9,13 @@ import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.YamlConfiguration;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
@@ -84,13 +90,19 @@ public final class SettingsBungee extends Settings {
     }
 
     @Override
-    public String getConfigString(final String path) {
+    public String getColoredConfigString(final String path) {
         final String s = config.getString(path);
         if (s == null) {
             plugin.getLogger().warning("The config is missing the following string: " + path);
             return "null";
         }
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    @Override
+    public String getConfigString(final String path, final String def) {
+        final String s = config.getString(path);
+        return s != null ? s : def;
     }
 
     @Override

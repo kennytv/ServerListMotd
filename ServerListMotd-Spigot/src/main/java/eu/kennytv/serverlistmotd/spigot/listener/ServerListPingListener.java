@@ -34,7 +34,7 @@ public final class ServerListPingListener implements Listener, IPingListener {
     @Override
     public boolean loadIcon() {
         try {
-            final File file = new File("server-icon.png");
+            final File file = new File(settings.getServerIconPath());
             if (!file.exists()) return false;
             serverIcon = Bukkit.loadServerIcon(ImageIO.read(file));
         } catch (final Exception e) {

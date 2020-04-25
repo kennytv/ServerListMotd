@@ -101,13 +101,19 @@ public final class SettingsSpigot extends Settings {
     }
 
     @Override
-    public String getConfigString(final String path) {
+    public String getColoredConfigString(final String path) {
         final String s = config.getString(path);
         if (s == null) {
             base.getLogger().warning("The config is missing the following string: " + path);
             return "null";
         }
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    @Override
+    public String getConfigString(final String path, final String def) {
+        final String s = config.getString(path);
+        return s != null ? s : def;
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.bukkit.util.CachedServerIcon;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 public final class PaperServerListPingListener implements Listener, IPingListener {
     private static final String PLAYERS_FORMAT = " §7%d§8/§7%d";
@@ -34,14 +35,14 @@ public final class PaperServerListPingListener implements Listener, IPingListene
             event.setProtocolVersion(-1);
             final String versionName = settings.showPlayerCount() ? settings.getPlayerCountMessage()
                     + String.format(PLAYERS_FORMAT, event.getNumPlayers(), event.getMaxPlayers()) : settings.getPlayerCountMessage();
-            event.setVersion(versionName);
+            event.setVersion(plugin.replacePlaceholders(versionName));
         }
 
         if (settings.hasCustomPlayerCountHoverMessage()) {
             final List<PlayerProfile> sample = event.getPlayerSample();
             sample.clear();
             for (final String string : settings.getPlayerCountHoverMessage().split("%NEWLINE%")) {
-                sample.add(plugin.getServer().createProfile(plugin.replacePlaceholders(string)));
+                sample.add(plugin.getServer().createProfile(UUID.randomUUID(), plugin.replacePlaceholders(string)));
             }
         }
 
@@ -53,7 +54,7 @@ public final class PaperServerListPingListener implements Listener, IPingListene
     @Override
     public boolean loadIcon() {
         try {
-            final File file = new File("server-icon.png");
+            final File file = new File(settings.getServerIconPath());
             if (!file.exists()) return false;
             serverIcon = Bukkit.loadServerIcon(ImageIO.read(file));
         } catch (final Exception e) {

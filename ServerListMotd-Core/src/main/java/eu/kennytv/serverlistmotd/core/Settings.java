@@ -15,6 +15,7 @@ public abstract class Settings implements ISettings {
     private String playerCountMessage;
     private String playerCountHoverMessage;
     private String noPermMessage;
+    private String serverIconPath;
 
     protected void loadSettings() {
         updateConfig();
@@ -22,9 +23,10 @@ public abstract class Settings implements ISettings {
         changePlayerCountHoverMessage = getConfigBoolean("custom-playercounthovermessage", true);
         showPlayerCount = getConfigBoolean("show-playercount");
         motds = getConfigList("motds");
-        noPermMessage = getConfigString("no-permission-message");
-        playerCountMessage = getConfigString("playercountmessage");
-        playerCountHoverMessage = getConfigString("playercounthovermessage");
+        noPermMessage = getColoredConfigString("no-permission-message");
+        playerCountMessage = getColoredConfigString("playercountmessage");
+        playerCountHoverMessage = getColoredConfigString("playercounthovermessage");
+        serverIconPath = getConfigString("server-icon-path", "server-icon.png");
         updateChecks = getConfigBoolean("update-checks", true);
     }
 
@@ -67,6 +69,11 @@ public abstract class Settings implements ISettings {
     }
 
     @Override
+    public String getServerIconPath() {
+        return serverIconPath;
+    }
+
+    @Override
     public boolean updateChecksEnabled() {
         return updateChecks;
     }
@@ -77,7 +84,9 @@ public abstract class Settings implements ISettings {
 
     public abstract void setToConfig(String path, Object var);
 
-    public abstract String getConfigString(String path);
+    public abstract String getColoredConfigString(String path);
+
+    public abstract String getConfigString(String path, String def);
 
     public abstract boolean getConfigBoolean(String path, boolean def);
 
