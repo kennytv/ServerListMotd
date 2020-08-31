@@ -15,7 +15,7 @@ ProtocolLib, and PlaceholderAPI. Generally speaking, PlaceholderAPI is not a tru
 dependency, but rather the plugin does provide support for it. ProtocolLib is only 
 required if you are using the spigot version of the plugin.
 
-## "ServerListMOTD Issues"
+## ServerListMOTD Issues
 When creating an issue, please include the following information.
 - ServerListMotd version
 - Whether you are using the plugin on a Spigot or a BungeeCord server
