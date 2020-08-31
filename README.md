@@ -1,6 +1,6 @@
 # ServerListMOTD - Set an MOTD as well as your playercount message!
 
-**ServerListMOTD Latest Version:** - [![version](https://img.shields.io/badge/version-v1.2.4-blue)](https://github.com/Bradydawg/ServerListMotd/releases/tag/1.2.4)
+**ServerListMOTD Latest Version:** - [![version](https://img.shields.io/badge/version-v1.2.5-blue)](https://github.com/Bradydawg/ServerListMotd/releases/tag/1.2.4)
 
 ## ServerListMOTD:
 ServerListMOTD was originally created by [(KennyTv)](https://github.com/KennyTV) for 
